@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<link href="styles.css" rel="stylesheet">
+		<script>
+			function addTask ()
+			{
+				let title = getElementById('title').innerText;
+				let type = getElementById('type').innerText;
+				let priority = getElementById('priority').innerText;
+				let date = getElementById('date').innerText;
+				
+				// Get a reference to the table
+				let tableRef = document.getElementById('mainTable');
+				// Insert a row at the end of the table
+				let newRow = tableRef.insertRow(-1);
+				
+				let newCell = newRow.insertCell(0);			  
+				newCell.innerHTML = title;
+				  
+				let newCell1 = newRow.insertCell(1);			  
+				newCell1.innerHTML = type;
+				  
+				let newCell2 = newRow.insertCell(2);			  
+				newCell2.innerHTML = priority;
+				  
+				let newCell3 = newRow.insertCell(3);			  
+				newCell3.innerHTML = date;
+			}
+		</script>
+	</head>
+	<body>
+		<form>
+		  <label for="title">Title:</label><br>
+		  <input type="text" id="title" name="title"><br>
+		  <label for="type">Type:</label><br>
+		  <input type="text" id="type" name="type"><br>
+		  <label for="priority">Priority:</label><br>
+		  <input type="text" id="priority" name="priority"><br>
+		  <label for="date">Date:</label><br>
+		  <input type="text" id="date" name="date"><br>
+		  <button onclick="addTask()">Submit</button>
+		</form>
+		<table id="mainTable">
+			<tr>
+				<th>Title</th>
+				<th>Type</th>
+				<th>Priority</th>
+				<th>Date</th>
+			</tr>
+		</table>
+	</body>
+</html>
