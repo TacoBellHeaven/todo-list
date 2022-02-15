@@ -2,51 +2,114 @@
 	<head>
 		<link href="styles.css" rel="stylesheet">
 		<script>
+			let id = 0;
 			function addTask ()
 			{
-				let title = getElementById('title').innerText;
-				let type = getElementById('type').innerText;
-				let priority = getElementById('priority').innerText;
-				let date = getElementById('date').innerText;
+				id++;
+				let title = document.getElementById('title').value;
+				let type = document.getElementById('type').value;
+				let priority = document.getElementById('priority').value;
+				let date = document.getElementById('date').value;
+				var dateArray = date.split("-");
 				
-				// Get a reference to the table
-				let tableRef = document.getElementById('mainTable');
-				// Insert a row at the end of the table
-				let newRow = tableRef.insertRow(-1);
+				let today = new Date();
+				let day = today.getDate();
+				let month = today.getMonth()+1;
+				let year = today.getFullYear();
 				
-				let newCell = newRow.insertCell(0);			  
-				newCell.innerHTML = title;
-				  
-				let newCell1 = newRow.insertCell(1);			  
-				newCell1.innerHTML = type;
-				  
-				let newCell2 = newRow.insertCell(2);			  
-				newCell2.innerHTML = priority;
-				  
-				let newCell3 = newRow.insertCell(3);			  
-				newCell3.innerHTML = date;
+				if(title=="" || type=="" || priority=="" | date=="")
+				{
+					alert("All fields must be non-empty");
+					return;
+				}
+				
+				if((priority > 5 || priority < 1)||!Number.isInteger(+priority))
+				{
+					alert("Priority must be a number from 1 to 5");
+					document.getElementById('priorityForm').reset();
+					return;
+				}
+				
+				if(dateArray[0] < year)
+				{
+					alert("Given date cannot be in the past");
+					document.getElementById('dateForm').reset();
+					return;
+				}
+				else if(dateArray[0] == year)
+				{
+					if(dateArray[1] < month)
+					{
+						alert("Given date cannot be in the past");
+						document.getElementById('dateForm').reset();
+						return;
+					}
+					else if(dateArray[1] == month)
+					{
+						if(dateArray[2] < day)
+						{
+							alert("Given date cannot be in the past");
+							document.getElementById('dateForm').reset();
+							return;
+						}
+					}
+				}
+				
+				var newTask1 = "<tr id=\"" + id + "\"><td>" + title + "</td><td>" + type + "</td><td height=\"8%\" width=\"30%\">";
+				var newTask2 = "</td><td>" + date + "</td></tr>";
+				document.getElementById('tableBody').innerHTML += newTask1;
+				var fillStar = "<img src=\"star.png\" width=\"5%\" height=\"5%\">";
+				var emptyStar = "<img src=\"nostar.png\" width=\"5%\" height=\"5%\">";
+				
+				for(let i=0; i<priority; i++)
+				{
+					document.getElementById('tableBody').innerHTML += fillStar;
+				}
+				for(let i=0; i<5-priority; i++)
+				{
+					document.getElementById('tableBody').innerHTML += emptyStar;
+				}
+				document.getElementById('tableBody').innerHTML += newTask2;
+				resetAll();
+			}
+			function resetAll ()
+			{
+				document.getElementById('titleForm').reset();
+				document.getElementById('typeForm').reset();
+				document.getElementById('priorityForm').reset();
+				document.getElementById('dateForm').reset();
 			}
 		</script>
 	</head>
 	<body>
-		<form>
+		<form id="titleForm">
 		  <label for="title">Title:</label><br>
 		  <input type="text" id="title" name="title"><br>
+		</form>
+		<form id="typeForm">
 		  <label for="type">Type:</label><br>
 		  <input type="text" id="type" name="type"><br>
+		</form>
+		<form id="priorityForm">
 		  <label for="priority">Priority:</label><br>
 		  <input type="text" id="priority" name="priority"><br>
-		  <label for="date">Date:</label><br>
-		  <input type="text" id="date" name="date"><br>
-		  <button onclick="addTask()">Submit</button>
 		</form>
+		<form id="dateForm">
+			<label for="date">Date:</label><br>
+			<input type="date" id="date" name="date"><br>
+		</form>
+		<button onclick="resetAll()">Clear</button>
+		<button type="button" onclick="addTask()">Submit</button>
 		<table id="mainTable">
-			<tr>
+			<thead>
 				<th>Title</th>
 				<th>Type</th>
 				<th>Priority</th>
 				<th>Date</th>
-			</tr>
+			</thead>
+			<tbody id="tableBody">
+			
+			</tbody>
 		</table>
 	</body>
 </html>
