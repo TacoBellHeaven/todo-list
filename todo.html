@@ -56,15 +56,17 @@
 				}
 				
 				var newTask1 = "<tr id=\"" + id + "\"><td>" + title + "</td><td>" + type + "</td><td height=\"8%\" width=\"30%\">";
-				var newTask2 = "</td><td>" + date.substring(5) + "-" + date.substring(0,4) + "</td></tr>";
+				var newTask2 = "</td><td>" + date.substring(5,7) + "/" + date.substring(8) + "/" + date.substring(0,4) + "</td>";
 				var fillStar = "<img src=\"star.png\" width=\"5%\" height=\"5%\">";
 				var emptyStar = "<img src=\"nostar.png\" width=\"5%\" height=\"5%\">";
+				var exitBox = "<td width=\"5%\"><input height=\"60%\" width=\"60%\" type=\"image\" src=\"exit.png\"  onclick=\"this.parentElement.parentElement.remove()\"></td></tr>";
 				
 				var fullTask = "";
 				fullTask += newTask1;
 				for(let i=0; i<priority; i++) fullTask += fillStar;
 				for(let i=0; i<5-priority; i++) fullTask += emptyStar;
 				fullTask += newTask2;
+				fullTask += exitBox;
 				document.getElementById('tableBody').innerHTML += fullTask;
 				resetAll();
 			}
@@ -102,6 +104,7 @@
 				<th>Type</th>
 				<th>Priority</th>
 				<th>Date</th>
+				<th>Complete</th>
 			</thead>
 			<tbody id="tableBody">
 			
