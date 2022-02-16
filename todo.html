@@ -56,20 +56,16 @@
 				}
 				
 				var newTask1 = "<tr id=\"" + id + "\"><td>" + title + "</td><td>" + type + "</td><td height=\"8%\" width=\"30%\">";
-				var newTask2 = "</td><td>" + date + "</td></tr>";
-				document.getElementById('tableBody').innerHTML += newTask1;
+				var newTask2 = "</td><td>" + date.substring(5) + "-" + date.substring(0,4) + "</td></tr>";
 				var fillStar = "<img src=\"star.png\" width=\"5%\" height=\"5%\">";
 				var emptyStar = "<img src=\"nostar.png\" width=\"5%\" height=\"5%\">";
 				
-				for(let i=0; i<priority; i++)
-				{
-					document.getElementById('tableBody').innerHTML += fillStar;
-				}
-				for(let i=0; i<5-priority; i++)
-				{
-					document.getElementById('tableBody').innerHTML += emptyStar;
-				}
-				document.getElementById('tableBody').innerHTML += newTask2;
+				var fullTask = "";
+				fullTask += newTask1;
+				for(let i=0; i<priority; i++) fullTask += fillStar;
+				for(let i=0; i<5-priority; i++) fullTask += emptyStar;
+				fullTask += newTask2;
+				document.getElementById('tableBody').innerHTML += fullTask;
 				resetAll();
 			}
 			function resetAll ()
